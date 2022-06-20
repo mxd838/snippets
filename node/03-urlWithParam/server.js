@@ -8,7 +8,12 @@ server.on('request', (request, response) => {
     // without url module, just property of request
     // console.log(request.url)
     // with url module, in order to parse what's been typed
-    console.log(url.parse(request.url))
-    response.end('Bonjour')
+    let query = url.parse(request.url, true).query
+    if (query.name === undefined){
+        response.write('Bonjour anonyme')
+    } else {
+        response.write('Bonjour ' + query.name)
+    }
+    response.end()
 })
 server.listen(8080)
